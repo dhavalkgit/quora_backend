@@ -1,6 +1,5 @@
 package com.example.quora.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +22,10 @@ public class User extends BaseModel{
     @Column(length = 300)
     private String about;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    List<Question> questions=new ArrayList<>();
+    private List<Question> questions=new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
+    private List<Answer> answers;
 }

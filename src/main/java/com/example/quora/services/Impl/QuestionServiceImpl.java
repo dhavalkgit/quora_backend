@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
-    QuestionRepo q_repo;
-    UserRepo userRepo;
+    private final QuestionRepo q_repo;
+    private final UserRepo userRepo;
 
     public QuestionServiceImpl(QuestionRepo q_repo, UserRepo userRepo){
         this.q_repo=q_repo;

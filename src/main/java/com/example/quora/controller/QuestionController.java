@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("api/v1/questions")
 public class QuestionController {
 
-    QuestionService q_service;
+    private final QuestionService q_service;
 
     public QuestionController(QuestionService q_service){
         this.q_service = q_service;
