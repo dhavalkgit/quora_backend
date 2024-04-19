@@ -28,4 +28,7 @@ public class User extends BaseModel{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
     private List<Answer> answers;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
+    private List<Comment> comments;
 }

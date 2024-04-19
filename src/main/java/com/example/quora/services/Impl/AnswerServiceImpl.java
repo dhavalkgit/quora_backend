@@ -10,6 +10,8 @@ import com.example.quora.repository.UserRepo;
 import com.example.quora.services.AnswerService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
@@ -32,5 +34,12 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setQuestion(question);
         answer.setUser(user);
         return answerRepo.save(answer);
+    }
+
+    @Override
+    public Answer updateAnswer(Answer answer, Long id) {
+        Optional<Answer> oldAnswer = answerRepo.findById(id);
+        oldAnswer.get().setText(answer.getText());
+        return answerRepo.save(oldAnswer.get());
     }
 }

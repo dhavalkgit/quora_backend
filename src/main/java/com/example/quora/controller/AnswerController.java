@@ -23,4 +23,10 @@ public class AnswerController {
         Answer res = answerService.createAnswer(answer, q_id, u_id);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAnswer(@RequestBody Answer answer, @PathVariable Long id){
+        Answer res = answerService.updateAnswer(answer,id);
+        return ResponseEntity.ok(res);
+    }
 }
