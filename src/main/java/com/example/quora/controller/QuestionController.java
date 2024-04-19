@@ -1,5 +1,6 @@
 package com.example.quora.controller;
 
+import com.example.quora.Dto.DtoQuestion;
 import com.example.quora.models.Question;
 import com.example.quora.services.QuestionService;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class QuestionController {
         this.q_service = q_service;
     }
 
-    @PostMapping("/{u_id}")
-    public ResponseEntity<?> postQuestion(@RequestBody Question question, @PathVariable Long u_id){
-        Question res = q_service.createQuestion(question,u_id);
+    @PostMapping("/")
+    public ResponseEntity<?> postQuestion(@RequestBody DtoQuestion dtoQuestion){
+        Question res = q_service.createQuestion(dtoQuestion);
         return new ResponseEntity<> (res, HttpStatus.CREATED);
     }
 

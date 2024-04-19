@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Question extends BaseModel{
 
+    @Column(nullable = false)
     private String title;
 
     private String body;
@@ -25,6 +26,9 @@ public class Question extends BaseModel{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "question")
     private List<Answer> answers;
+
+    @ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private List<Topics>topics;
 
     @Override
     public String toString() {
