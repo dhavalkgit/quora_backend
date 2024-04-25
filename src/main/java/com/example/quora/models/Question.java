@@ -33,6 +33,9 @@ public class Question extends BaseModel{
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topics>topics;
 
+    @OneToMany(mappedBy = "question")
+    private List<QuestionLike> questionLikes;
+
     @Override
     public String toString() {
         return "Question{" +

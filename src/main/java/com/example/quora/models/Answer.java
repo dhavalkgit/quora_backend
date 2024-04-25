@@ -28,4 +28,7 @@ public class Answer extends BaseModel{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer", fetch = FetchType.LAZY)
     private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer", fetch = FetchType.LAZY)
+    private List<AnswerLike>likes;
 }

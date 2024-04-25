@@ -33,4 +33,7 @@ public class Comment extends BaseModel{
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<Comment> replays;
+
+    @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL)
+    private List<CommentLike>likes;
 }
