@@ -1,5 +1,7 @@
 package com.example.quora.controller;
 
+import com.example.quora.adapter.CommentDtoToCommentAdapter;
+import com.example.quora.dtos.CommentDto;
 import com.example.quora.models.Comment;
 import com.example.quora.services.CommentService;
 import org.springframework.http.HttpStatus;
@@ -10,22 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final CommentDtoToCommentAdapter commentAdapter;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, CommentDtoToCommentAdapter commentAdapter) {
         this.commentService = commentService;
+        this.commentAdapter=commentAdapter;
     }
 
-    @PostMapping("/answers/{answer_id}/users/{user_id}")
-    public ResponseEntity<?> postComment(@RequestBody Comment comment, @PathVariable Long answer_id,
-                                         @PathVariable Long user_id){
-        Comment res = commentService.createComment(comment,answer_id,user_id);
+    @PostMapping("/{answer_id}/answers")
+    public ResponseEntity<?> postComment(@RequestBody CommentDto commentDto, @PathVariable Long answer_id){
+        Comment comment = commentAdapter.commentDtoToComment(commentDto, answer_id);
+        Comment res = commentService.createComment(comment);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{parent_id}/users/{user_id}")
-    public ResponseEntity<?> replayOnComment(@RequestBody Comment comment, @PathVariable Long parent_id,
-                                             @PathVariable Long user_id){
-        Comment res = commentService.createReplayOnComment(comment,parent_id,user_id);
+    @PostMapping("/{parent_id}/comments")
+    public ResponseEntity<?> replayOnComment(@RequestBody CommentDto commentDto, @PathVariable Long parent_id){
+        Comment comment = commentAdapter.CommentToComment(commentDto, parent_id);
+        Comment res = commentService.createComment(comment);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 }

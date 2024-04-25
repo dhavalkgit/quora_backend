@@ -18,7 +18,7 @@ public class Answer extends BaseModel{
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id",nullable = false)
     private Question question;
 
     @JsonIgnore

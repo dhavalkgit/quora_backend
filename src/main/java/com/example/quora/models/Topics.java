@@ -1,5 +1,6 @@
 package com.example.quora.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,11 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Topics extends BaseModel{
 
+    @Column(nullable = false, unique = true)
     private String topicName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "question_topic",
-    joinColumns = @JoinColumn(name = "topic_id"),
-    inverseJoinColumns = @JoinColumn(name = "question_id"))
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "topics")
+    @JsonIgnore
     private List<Question>questions;
 }

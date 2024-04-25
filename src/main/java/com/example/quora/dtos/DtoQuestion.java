@@ -1,4 +1,4 @@
-package com.example.quora.Dto;
+package com.example.quora.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
