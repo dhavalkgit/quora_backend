@@ -22,6 +22,11 @@ public class User extends BaseModel{
     @Column(length = 300)
     private String about;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<User> followers;
+
+    @ManyToMany(mappedBy = "followers")
+    private List<User> following;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Question> questions;
@@ -40,4 +45,13 @@ public class User extends BaseModel{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
     private List<CommentLike> commentLikes;
+
+
+    public void addFollowers(User user){
+        this.followers.add(user);
+    }
+
+    public void addFollowing (User user){
+        this.following.add(user);
+    }
 }

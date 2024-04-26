@@ -48,4 +48,18 @@ public class UserServicesImpl implements UserServices {
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }
+
+    @Override
+    public boolean addFollow(Long userId, Long targetUserId) {
+        Optional<User> userFollowers = userRepo.findById(targetUserId);
+        Optional<User> userFollowing = userRepo.findById(userId);
+
+        userFollowing.get().addFollowing(userFollowers.get());
+        userFollowers.get().addFollowers(userFollowing.get());
+
+         userRepo.save(userFollowing.get());
+         userRepo.save(userFollowers.get());
+
+        return true;
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
@@ -38,5 +40,12 @@ public class UserController {
        User res = userServices.updateUser(user, id);
         UserResponseDto userResponse = userHelper.sendUserResponse(res);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/follow/{targetUserId}")
+    public ResponseEntity<?> addFollowingAndFollowers(@PathVariable Long userId,
+                                                      @PathVariable Long targetUserId){
+        boolean flag = userServices.addFollow(userId,targetUserId);
+        return new ResponseEntity<>(Map.of("message","success"), HttpStatus.CREATED);
     }
 }

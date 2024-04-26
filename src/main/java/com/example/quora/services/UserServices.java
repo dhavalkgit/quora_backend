@@ -9,4 +9,5 @@ public interface UserServices {
     public User updateUser(User newUserData, Long id);
     public User getUser(Long id);
     public List<User> getAllUsers();
+    public boolean addFollow(Long userId, Long targetUserId);
 }
