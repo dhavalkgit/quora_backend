@@ -1,10 +1,11 @@
 package com.example.quora.services.Impl;
 
-import com.example.quora.exceptionhandeler.ResourceDuplicateException;
+import com.example.quora.dtos.UserSignUpDto;
 import com.example.quora.exceptionhandeler.ResourceNotFoundException;
 import com.example.quora.models.User;
 import com.example.quora.repository.UserRepo;
 import com.example.quora.services.UserServices;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,18 +15,22 @@ import java.util.Optional;
 public class UserServicesImpl implements UserServices {
 
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServicesImpl(UserRepo userRepo){
+    public UserServicesImpl(UserRepo userRepo, PasswordEncoder passwordEncoder){
         this.userRepo=userRepo;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @Override
-    public User createUser(User user) {
-        String userName = user.getEmail();
-        Optional<User> byUserName = userRepo.findByEmail(userName);
-
-        if(byUserName.isPresent()) throw new ResourceDuplicateException(userName);
-        return userRepo.save(user);
+    public User createUser(UserSignUpDto user) {
+        User dbUser=User.builder()
+                .email(user.getEmail())
+                .about(user.getAbout())
+                .name(user.getName())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .build();
+       return userRepo.save(dbUser);
     }
 
     @Override
@@ -37,6 +42,12 @@ public class UserServicesImpl implements UserServices {
             oldUserData.get().setEmail(newUserData.getEmail());
         }
         return userRepo.save(oldUserData.get());
+    }
+
+    @Override
+    public User getByUserName(String username) {
+        Optional<User> byEmail = userRepo.findByEmail(username);
+        return byEmail.orElse(null);
     }
 
     @Override

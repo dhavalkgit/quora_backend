@@ -21,12 +21,14 @@ public class UserController {
         this.userServices=userServices;
     }
 
+    /*
     @PostMapping("/")
     public ResponseEntity<UserResponseDto> RegisterUser(@RequestBody User user){
         User res=userServices.createUser(user);
         UserResponseDto userResponse = userHelper.sendUserResponse(res);
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
+     */
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserDetails(@PathVariable Long id){

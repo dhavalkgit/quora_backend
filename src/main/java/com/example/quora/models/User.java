@@ -22,6 +22,9 @@ public class User extends BaseModel{
     @Column(length = 300)
     private String about;
 
+    @Column(nullable = false)
+    private String password;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private List<User> followers;
 
@@ -40,8 +43,8 @@ public class User extends BaseModel{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
     private List<QuestionLike> questionLikes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
-    private List<AnswerLike> answerLikes;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
+//    private List<AnswerLike> answerLikes;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
     private List<CommentLike> commentLikes;
