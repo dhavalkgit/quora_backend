@@ -16,17 +16,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    private static final String []  PATH_URI = {
+            "swagger-ui/*",
+            "swagger-resources/*",
+            "swagger-resources",
+            "v3/api-docs/*"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req->
                         req.requestMatchers("/api/v1/auth/signup/*").permitAll()
                            .requestMatchers("/api/v1/auth/signin/*").permitAll()
-                           .anyRequest()
-                           .authenticated()
+                           .requestMatchers(PATH_URI).permitAll()
+                           .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .formLogin(httpSecurityFormLoginConfigurer ->{})
                 .build();
     }
 
